@@ -954,9 +954,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 Transform(Vector3 vec, Matrix3 mat)
+        public static Vector3 TransformColumn(Vector3 vec, Matrix3 mat)
         {
-            Transform(ref vec, ref mat, out Vector3 result);
+            TransformColumn(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -966,7 +966,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)
+        public static void TransformColumn(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)
         {
             result.X = (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X);
             result.Y = (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y);
@@ -1012,9 +1012,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 Transform(Matrix3 mat, Vector3 vec)
+        public static Vector3 TransformRow(Matrix3 mat, Vector3 vec)
         {
-            Transform(ref mat, ref vec, out Vector3 result);
+            TransformRow(ref mat, ref vec, out Vector3 result);
             return result;
         }
 
@@ -1024,7 +1024,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
+        public static void TransformRow(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
         {
             result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
             result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z);
@@ -1053,7 +1053,7 @@ namespace OpenToolkit.Mathematics
         public static void TransformPerspective(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
             var v = new Vector4(vec.X, vec.Y, vec.Z, 1);
-            Vector4.Transform(ref v, ref mat, out v);
+            Vector4.TransformColumn(ref v, ref mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;
             result.Z = v.Z / v.W;
@@ -1471,7 +1471,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
-            Transform(ref vec, ref mat, out Vector3 result);
+            TransformColumn(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -1484,7 +1484,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector3 operator *(Matrix3 mat, Vector3 vec)
         {
-            Transform(ref mat, ref vec, out Vector3 result);
+            TransformRow(ref mat, ref vec, out Vector3 result);
             return result;
         }
 
